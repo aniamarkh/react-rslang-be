@@ -6,7 +6,7 @@ process.on('unhandledRejection', reason => {
 });
 
 const mongoose = require('mongoose');
-const { PORT, MONGO_CONNECTION_STRING } = require('./common/config');
+const { PORT, HOST, MONGO_CONNECTION_STRING } = require('./common/config');
 const app = require('./app');
 
 mongoose.connect(MONGO_CONNECTION_STRING, {
@@ -22,8 +22,8 @@ db.on('error', () => logger.error('MongoDB connection error:')).once(
   'open',
   () => {
     logger.info('Successfully connect to DB');
-    app.listen(PORT, () =>
-      logger.info(`App is running on http://localhost:${PORT}`)
+    app.listen(PORT, HOST, () =>
+      logger.info(`App is running on http://${HOST}:${PORT}`)
     );
   }
 );
